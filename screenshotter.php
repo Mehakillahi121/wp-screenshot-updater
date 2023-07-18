@@ -175,6 +175,14 @@ register_activation_hook(__FILE__, 'activation');
 function activation() {
     add_action('admin_menu', 'screenshot_add_submenu_page');
    // add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'my_custom_plugin_documentation_link');
+   $node_modules_path = plugin_dir_path(__FILE__) . 'node_modules';
+    
+   // Check if the 'node_modules' directory exists
+   if (is_dir($node_modules_path)) {
+       // Run the 'npm install' command
+       $command = 'npm --prefix ' . escapeshellarg($node_modules_path) . ' install ' . escapeshellarg($node_modules_path);
+       exec($command);
+   }
 }
 
 add_action('admin_init', 'your_plugin_add_action_link_on_activation');
