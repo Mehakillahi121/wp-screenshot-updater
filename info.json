@@ -1,6 +1,6 @@
 {
-	"name" : "Misha Update Checker",
-	"slug" : "misha-update-checker",
+	"name" : "Screenshot-Plugin",
+	"slug" : "Screenshot-Plugin",
 	"version" : "2.0",
 	"download_url" : "https://github.com/Mehakillahi121/wp-screenshot-updater/archive/main.zip",
 	"requires" : "2.0",
