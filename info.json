@@ -1,6 +1,5 @@
-{
-	"name" : "Screenshot-Plugin",
-	"slug" : "Screenshot-Plugin",
+{	"name" : "screenshotter",
+    "slug" : "screenshotter",
 	"version" : "3.0",
 	"download_url" : "https://github.com/Mehakillahi121/wp-screenshot-updater/archive/main.zip",
 	"requires" : "3.0",
