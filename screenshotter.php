@@ -4,11 +4,8 @@ Plugin Name: Screenshot-Plugin
 Description: Convert URL or HTML content into an image.
 Version: 2.0
 Author: Mehak Illahi
-Documentation: https://your-plugin-documentation-url.com
+
 */
-
-
-
 
 if( ! class_exists( 'mishaUpdateChecker' ) ) {
 
