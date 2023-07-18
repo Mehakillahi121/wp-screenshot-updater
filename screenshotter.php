@@ -9,7 +9,50 @@ Documentation: https://your-plugin-documentation-url.com
 
 
 defined( 'ABSPATH' ) || exit;
+register_activation_hook(__FILE__, 'activation');
 
+function activation() {
+    add_action('admin_menu', 'screenshot_add_submenu_page');
+   // add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'my_custom_plugin_documentation_link');
+}
+
+add_action('admin_init', 'your_plugin_add_action_link_on_activation');
+
+function your_plugin_add_action_link_on_activation() {
+    if (is_plugin_active(plugin_basename(__FILE__))) {
+        add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'your_plugin_add_action_link');
+    }
+}
+
+function your_plugin_add_action_link($links) {
+    // Add your custom action link
+    $action_link = '<a href="' . esc_url(admin_url('options-general.php?page=screenshot-documentation')) . '">Documentation</a>';
+    array_push($links, $action_link);
+
+    return $links;
+}
+function my_custom_plugin_documentation_link($links) {
+    // Modify the plugin action links as needed
+    $settings_link = '<a href="' . esc_url(admin_url('options-general.php?page=screenshot-documentation')) . '">Documentation</a>';
+    array_push($links, $settings_link);
+    return $links;
+}
+
+function screenshot_submenu_page_callback() {
+    include 'documentation/startingpage.php';
+}
+
+add_action('admin_menu', 'screenshot_add_submenu_page');
+function screenshot_add_submenu_page() {
+    add_submenu_page(
+        'options-general.php', // Parent menu slug (options-general.php is for the Settings menu)
+        'Screenshot Documentation', // Page title
+        'Documentation', // Menu title
+        'manage_options', // Capability required to access the menu
+        'screenshot-documentation', // Menu slug
+        'screenshot_submenu_page_callback' // Callback function to render the submenu page
+    );
+}
 
 if( ! class_exists( 'mishaUpdateChecker' ) ) {
 
@@ -39,8 +82,7 @@ if( ! class_exists( 'mishaUpdateChecker' ) ) {
 
 			if( false === $remote || ! $this->cache_allowed ) {
 
-				$repo_owner = 'Mehakillahi121'; // Replace with the owner of the private repository
-				$repo_name = 'Mehakillahi121/new-updater'; 
+				
 
 				$remote = wp_remote_get(
 					"https://raw.githubusercontent.com/Mehakillahi121/wp-screenshot-updater/main/info.json",
@@ -68,9 +110,7 @@ if( ! class_exists( 'mishaUpdateChecker' ) ) {
 			$remote = json_decode( wp_remote_retrieve_body( $remote ) );
 
 			return $remote;
-			echo "<pre>";
-			print_r($remote);
-			exit;
+			
 
 		}
 
@@ -176,50 +216,7 @@ if( ! class_exists( 'mishaUpdateChecker' ) ) {
 	new mishaUpdateChecker();
 
 }
-register_activation_hook(__FILE__, 'activation');
 
-function activation() {
-    add_action('admin_menu', 'screenshot_add_submenu_page');
-   // add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'my_custom_plugin_documentation_link');
-}
-
-add_action('admin_init', 'your_plugin_add_action_link_on_activation');
-
-function your_plugin_add_action_link_on_activation() {
-    if (is_plugin_active(plugin_basename(__FILE__))) {
-        add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'your_plugin_add_action_link');
-    }
-}
-
-function your_plugin_add_action_link($links) {
-    // Add your custom action link
-    $action_link = '<a href="' . esc_url(admin_url('options-general.php?page=screenshot-documentation')) . '">Documentation</a>';
-    array_push($links, $action_link);
-
-    return $links;
-}
-function my_custom_plugin_documentation_link($links) {
-    // Modify the plugin action links as needed
-    $settings_link = '<a href="' . esc_url(admin_url('options-general.php?page=screenshot-documentation')) . '">Documentation</a>';
-    array_push($links, $settings_link);
-    return $links;
-}
-
-function screenshot_submenu_page_callback() {
-    include 'documentation/startingpage.php';
-}
-
-add_action('admin_menu', 'screenshot_add_submenu_page');
-function screenshot_add_submenu_page() {
-    add_submenu_page(
-        'options-general.php', // Parent menu slug (options-general.php is for the Settings menu)
-        'Screenshot Documentation', // Page title
-        'Documentation', // Menu title
-        'manage_options', // Capability required to access the menu
-        'screenshot-documentation', // Menu slug
-        'screenshot_submenu_page_callback' // Callback function to render the submenu page
-    );
-}
 
 class Webfort_ScreenshotPlugin {
     public $puppeteer;
