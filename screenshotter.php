@@ -2,7 +2,7 @@
 /*
 Plugin Name: Screenshot-Plugin
 Description: Convert URL or HTML content into an image.
-Version: 2.0
+Version: 3.0
 Author: Mehak Illahi
 
 */
